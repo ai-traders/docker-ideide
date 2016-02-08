@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y apt-transport-https ca-certificates &&\
     echo "deb https://apt.dockerproject.org/repo debian-jessie main" > \
     /etc/apt/sources.list.d/shellcheck.list &&\
     apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D &&\
-    apt-get update && apt-get install -y git sudo shellcheck rake docker-engine &&\
+    apt-get update && apt-get install -y git sudo shellcheck rake curl docker-engine &&\
     apt-get -y autoremove &&\
     apt-get -y autoclean &&\
     apt-get -y clean &&\
