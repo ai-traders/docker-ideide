@@ -5,14 +5,15 @@ COPY scripts/* /usr/bin/
 
 # entrypoint requires sudo and it should be first installed, then set
 # also we need: git, docker, shellcheck and shpec
+# we need make to install shpec
 
-RUN apt-get update && apt-get install -y ca-certificates &&\
+RUN apt-get update && apt-get install -y ca-certificates wget &&\
     echo "deb http://archive.ubuntu.com/ubuntu/ trusty-backports restricted main universe" > \
     /etc/apt/sources.list.d/shellcheck.list &&\
     echo "deb http://apt.ai-traders.com/docker debian-jessie main" > \
     /etc/apt/sources.list.d/docker.list &&\
-    wget http://apt.ai-traders.com/pubkey.gpg -O - | sudo apt-key add - &&\
-    apt-get update && apt-get install -y git sudo shellcheck rake curl docker-engine &&\
+    wget http://apt.ai-traders.com/pubkey.gpg -O - | apt-key add - &&\
+    apt-get update && apt-get install -y git sudo shellcheck rake curl docker-engine make &&\
     apt-get -y autoremove &&\
     apt-get -y autoclean &&\
     apt-get -y clean &&\
