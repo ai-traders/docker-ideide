@@ -39,7 +39,7 @@ this_image_name=\"ideide\"\n\
 this_image_tag=\"${VERSION}\"\n\
 " >> /etc/docker_metadata.txt
 
-# this (#8268) and setting overlay as docker daemon storage driver (#8149)
+# this (#8268) and setting overlay as docker daemon storage driver (#8419)
 # is needed to build docker images inside a docker container created
 # from this docker image
 RUN rm -Rf /var/lib/docker/*
