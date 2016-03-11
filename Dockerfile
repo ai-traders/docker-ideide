@@ -20,7 +20,9 @@ RUN apt-get update && apt-get install -y ca-certificates wget &&\
     rm -rf /tmp/* /var/tmp/* &&\
     rm -rf /var/lib/apt/lists/* &&\
     sh -c "`curl -L https://raw.github.com/rylnd/shpec/master/install.sh`" &&\
-    echo "DOCKER_OPTS=\"--graph=/var/lib/docker -H unix:///var/run/docker.sock -H tcp://0.0.0.0:2375 --insecure-registry=docker-registry.ai-traders.com --mtu=1500 --storage-driver=overlay\"" > /etc/default/docker
+    echo "DOCKER_OPTS=\"--graph=/var/lib/docker -H unix:///var/run/docker.sock -H tcp://0.0.0.0:2375 --insecure-registry=docker-registry.ai-traders.com --mtu=1500 --storage-driver=overlay\"" > /etc/default/docker &&\
+    curl -L https://github.com/docker/compose/releases/download/1.6.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose &&\
+    chmod +x /usr/local/bin/docker-compose
 
 RUN useradd -d /home/ide -p pass -s /bin/bash -u 1000 -m ide &&\
     chmod 755 /usr/bin/ide-fix-uid-gid.sh &&\
