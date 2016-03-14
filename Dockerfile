@@ -7,22 +7,22 @@ COPY scripts/* /usr/bin/
 # also we need: git, docker, shellcheck and shpec
 # we need make to install shpec
 
-RUN apt-get update && apt-get install -y ca-certificates wget &&\
+RUN apt-get update && apt-get install -y ca-certificates wget --no-install-recommends &&\
     echo "deb http://archive.ubuntu.com/ubuntu/ trusty-backports restricted main universe" > \
     /etc/apt/sources.list.d/shellcheck.list &&\
     echo "deb http://apt.ai-traders.com/docker debian-jessie main" > \
     /etc/apt/sources.list.d/docker.list &&\
     wget http://apt.ai-traders.com/pubkey.gpg -O - | apt-key add - &&\
-    apt-get update && apt-get install -y git sudo shellcheck rake curl docker-engine make &&\
+    apt-get update && apt-get install -y git sudo shellcheck rake curl docker-engine make --no-install-recommends &&\
+    sh -c "`curl -L https://raw.github.com/rylnd/shpec/master/install.sh`" &&\
+    echo "DOCKER_OPTS=\"--graph=/var/lib/docker -H unix:///var/run/docker.sock -H tcp://0.0.0.0:2375 --insecure-registry=docker-registry.ai-traders.com --mtu=1500\"" > /etc/default/docker &&\
+    curl -L https://github.com/docker/compose/releases/download/1.6.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose &&\
+    chmod +x /usr/local/bin/docker-compose &&\
     apt-get -y autoremove &&\
     apt-get -y autoclean &&\
     apt-get -y clean &&\
     rm -rf /tmp/* /var/tmp/* &&\
-    rm -rf /var/lib/apt/lists/* &&\
-    sh -c "`curl -L https://raw.github.com/rylnd/shpec/master/install.sh`" &&\
-    echo "DOCKER_OPTS=\"--graph=/var/lib/docker -H unix:///var/run/docker.sock -H tcp://0.0.0.0:2375 --insecure-registry=docker-registry.ai-traders.com --mtu=1500 --storage-driver=overlay\"" > /etc/default/docker &&\
-    curl -L https://github.com/docker/compose/releases/download/1.6.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose &&\
-    chmod +x /usr/local/bin/docker-compose
+    rm -rf /var/lib/apt/lists/*
 
 RUN useradd -d /home/ide -p pass -s /bin/bash -u 1000 -m ide &&\
     chmod 755 /usr/bin/ide-fix-uid-gid.sh &&\

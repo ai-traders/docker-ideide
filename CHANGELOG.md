@@ -1,3 +1,8 @@
+# 0.1.1 (14 Mar 2016)
+
+* #8777 do not set docker storage driver
+* install from apt with `--no-install-recommends` option
+
 # 0.1.0 (11 Mar 2016)
 
 * #8933 install docker-compose
