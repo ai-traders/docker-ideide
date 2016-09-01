@@ -1,0 +1,36 @@
+pipelines:
+  "docker-ideide.ci":
+    group: ide
+    label_template: "${git[:8]}"
+    materials:
+      git:
+        git: "git@git.ai-traders.com:ide/docker-ideide.git"
+        branch: ci
+    stages:
+      - build:
+          clean_workspace: true
+          jobs:
+            build:
+              resources:
+                - docker
+                - small
+              tasks:
+                - script: ./build.sh
+      - test:
+          clean_workspace: true
+          jobs:
+            test:
+              resources:
+                - docker
+                - small
+              tasks:
+                - script: ./test.sh
+      - release:
+          clean_workspace: true
+          jobs:
+            code:
+              resources:
+                - docker
+                - small
+              tasks:
+                - script: ./release.sh

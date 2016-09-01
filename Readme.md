@@ -33,17 +33,23 @@ Those files are used inside ideide docker image:
 3. `~/.gitconfig` -- if exists locally, will be copied
 
 ## Development
-1. Increment version in `image/scripts/variables.sh`
+### Build
+1. Add any changes and increment version in `image/scripts/variables.sh`
 2. Build the docker image:
   ```
   ./build.sh
   ```
-3. Create git tag with that version.
 
-### Testing
+### Test
 Run:
 ```
 ./test.sh
+```
+
+### Release
+Run:
+```
+./release.sh
 ```
 
 ### TODO
@@ -51,4 +57,3 @@ Run:
  compiling ShellCheck. But I could try compiling it using
  https://github.com/NLKNguyen/alpine-shellcheck .
 * Add better acceptance tests which run `ide` commands (use BATS?).
-* Add GOCD pipeline (in yaml format).
