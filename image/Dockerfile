@@ -12,7 +12,7 @@ MAINTAINER Ewa Czechowska <ewa@ai-traders.com>
 # remove it when docker 1.12.2 is available
 # * chown ide:ide -R /usr/local/lib/ruby/gems/2.3.0/ is needed to install
 # gem gherkin
-RUN mv /etc/apt/sources.list /root/apt-sources.list &&\
+RUN rm /etc/apt/sources.list /root/apt-sources.list &&\
   echo "deb http://httpredir.debian.org/debian jessie main" > \
     /etc/apt/sources.list &&\
   apt-get update && apt-get install -y --force-yes --no-install-recommends apt-transport-https &&\
@@ -37,13 +37,8 @@ RUN mv /etc/apt/sources.list /root/apt-sources.list &&\
   rm -rf /tmp/* /var/tmp/* &&\
   rm -rf /var/lib/apt/lists/*
 
-
-
 COPY scripts/* /etc/ide.d/
 
-# this (#8268) and setting overlay as docker daemon storage driver (#8419)
-# is needed to build docker images inside a docker container created
-# from this docker image
 RUN rm -Rf /var/lib/docker/*
 VOLUME /var/lib/docker
 
