@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ###########################################################################
-# A file to keep any bash variables. Used in Makefile and also copied
-# into ideide docker image.
+# A file to keep any bash variables. Used in Makefile and in tests and also
+# is copied into ideide docker image.
 ###########################################################################
 
 export this_image_name="ideide"

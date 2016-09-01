@@ -38,9 +38,15 @@ Those files are used inside ideide docker image:
   ```
 3. Create git tag with that version.
 
+### Testing
+Run:
+```
+./test.sh
+```
+
 ### TODO
 * Why not use Alpine Linux as base docker image? Because I wanted to avoid
  compiling ShellCheck. But I could try compiling it using
  https://github.com/NLKNguyen/alpine-shellcheck .
-* Add acceptance tests which run `ide` commands (use BATS?).
+* Add better acceptance tests which run `ide` commands (use BATS?).
 * Add GOCD pipeline (in yaml format).
