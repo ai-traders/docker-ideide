@@ -6,10 +6,12 @@ MAINTAINER Ewa Czechowska <ewa@ai-traders.com>
 # * entrypoint requires sudo
 # * git is needed by some ruby gems to be installed from github and
 # to install ide image configs
-# * make is needed to install shpec
+# * make is needed to install shpec and to install gems with native extensions
 # * keep only needed apt sources to make apt-get update faster
 # * the sed line fixes https://github.com/docker/docker/pull/25869
 # remove it when docker 1.12.2 is available
+# * chown ide:ide -R /usr/local/lib/ruby/gems/2.3.0/ is needed to install
+# gem gherkin
 RUN mv /etc/apt/sources.list /root/apt-sources.list &&\
   echo "deb http://httpredir.debian.org/debian jessie main" > \
     /etc/apt/sources.list &&\
@@ -28,12 +30,14 @@ RUN mv /etc/apt/sources.list /root/apt-sources.list &&\
   ide/ide_image_scripts/src/install.sh && rm -r ide &&\
   echo 'ide ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers &&\
   usermod -aG docker ide &&\
-  apt-get purge make &&\
+  chown ide:ide -R /usr/local/lib/ruby/gems/2.3.0/ &&\
   apt-get -y autoremove &&\
   apt-get -y autoclean &&\
   apt-get -y clean &&\
   rm -rf /tmp/* /var/tmp/* &&\
   rm -rf /var/lib/apt/lists/*
+
+
 
 COPY scripts/* /etc/ide.d/
 
