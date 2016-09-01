@@ -21,6 +21,8 @@ By default current directory in docker container is `/ide/work` and docker daemo
 ```bash
 $ ide rake style
 $ ide shpec
+$ ide docker ps -a
+$ ide gem install gherkin
 ```
 
 ### Configuration

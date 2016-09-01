@@ -4,6 +4,7 @@
 * start from ruby docker base image
 * install ide image configs from IDE source code
 * make it open source
+* add simple tests
 
 # 0.1.1 (14 Mar 2016)
 
