@@ -1,3 +1,10 @@
+# 1.0.0 (1 Sep 2016)
+
+* install ruby+docker+shpec+shellcheck
+* start from ruby docker base image
+* install ide image configs from IDE source code
+* make it open source
+
 # 0.1.1 (14 Mar 2016)
 
 * #8777 do not set docker storage driver

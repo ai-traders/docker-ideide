@@ -1,27 +1,46 @@
 # ideide
 
-It's a docker image to test IDE.
+An ide docker image to test [IDE](https://github.com/ai-traders/ide).
 
-It can run rake tasks, shpec, shellcheck and has docker daemon installed.
-
-## Configuration
-Those files are used inside gitide docker image:
-1. `~/.ssh/config` -- will be generated on docker container start
-2. `~/.ssh/id_rsa` -- it must exist locally, because it is a secret
-2. `~/.gitconfig` -- if exists locally, will be copied
-3. `/home/ide/.profile` -- will be generated on docker container start, in 
-   order to ensure current directory is `/ide/work`.
-2. `~/.gemrc` -- if exists locally, will be copied
+It has installed:
+ * ruby
+ * shpec
+ * shellcheck
+ * docker daemon
 
 ## Usage
 Example Idefile:
 ```
-IDE_DOCKER_IMAGE="docker-registry.ai-traders.com/ideide:0.0.2"
+IDE_DOCKER_IMAGE="ideide:1.0.0"
+# --privileged is for docker daemon
 IDE_DOCKER_OPTIONS="--privileged"
 ```
-privileged is for docker daemon.
 
-By default current directory in docker container is `/ide/work`. Example command:
+By default current directory in docker container is `/ide/work` and docker daemon
+ is running. Example commands:
 ```bash
-ide$ IDE_LOG_LEVEL=debug ide rake style
+$ ide rake style
+$ ide shpec
 ```
+
+### Configuration
+Those files are used inside ideide docker image:
+1. `/home/ide/.profile` -- will be generated on docker container start, in
+   order to ensure current directory is `/ide/work`.
+2. `~/.gemrc` -- if exists locally, will be copied
+3. `~/.gitconfig` -- if exists locally, will be copied
+
+## Development
+1. Increment version in `image/scripts/variables.sh`
+2. Build the docker image:
+  ```
+  ./build.sh
+  ```
+3. Create git tag with that version.
+
+### TODO
+* Why not use Alpine Linux as base docker image? Because I wanted to avoid
+ compiling ShellCheck. But I could try compiling it using
+ https://github.com/NLKNguyen/alpine-shellcheck .
+* Add acceptance tests which run `ide` commands (use BATS?).
+* Add GOCD pipeline (in yaml format).
