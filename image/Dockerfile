@@ -12,7 +12,7 @@ MAINTAINER Ewa Czechowska <ewa@ai-traders.com>
 # remove it when docker 1.12.2 is available
 # * chown ide:ide -R /usr/local/lib/ruby/gems/2.3.0/ is needed to install
 # gem gherkin
-RUN rm /etc/apt/sources.list /root/apt-sources.list &&\
+RUN rm /etc/apt/sources.list &&\
   echo "deb http://httpredir.debian.org/debian jessie main" > \
     /etc/apt/sources.list &&\
   apt-get update && apt-get install -y --force-yes --no-install-recommends apt-transport-https &&\
