@@ -26,7 +26,7 @@ RUN rm /etc/apt/sources.list &&\
   echo "DOCKER_OPTS=\"--graph=/var/lib/docker -H unix:///var/run/docker.sock -H tcp://0.0.0.0:2375\"" > /etc/default/docker &&\
   curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose &&\
   chmod +x /usr/local/bin/docker-compose &&\
-  git clone --depth 1 -b configs-script http://gitlab.ai-traders.com/ide/ide.git &&\
+  git clone --depth 1 -b 0.5.0 https://github.com/ai-traders/ide.git &&\
   ./ide/ide_image_scripts/src/install.sh && rm -r ./ide &&\
   echo 'ide ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers &&\
   usermod -aG docker ide &&\

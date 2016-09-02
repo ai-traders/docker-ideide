@@ -28,12 +28,17 @@ $ ide gem install gherkin
 ### Configuration
 Those files are used inside ideide docker image:
 
-1. `/home/ide/.profile` -- will be generated on docker container start, in
+1. `~/.ssh/config` -- will be generated on docker container start
+2. `~/.ssh/id_rsa` -- it must exist locally, because it is a secret
+3. `/home/ide/.profile` -- will be generated on docker container start, in
    order to ensure current directory is `/ide/work`.
-2. `~/.gemrc` -- if exists locally, will be copied
-3. `~/.gitconfig` -- if exists locally, will be copied
+4. `~/.gitconfig` -- if exists locally, will be copied
+5. `~/.gemrc` -- if exists locally, will be copied
 
 ## Development
+### Dependencies
+Bash and Docker daemon.
+
 ### Build
 1. Add any changes and increment version in `image/scripts/variables.sh`
  (no automated version management).
