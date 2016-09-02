@@ -14,4 +14,4 @@ export owner_username="ide"
 export owner_groupname="ide"
 
 export this_image_name="ideide"
-export this_image_tag="1.0.0"
+export this_image_tag="1.0.1"

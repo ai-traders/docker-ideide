@@ -10,5 +10,8 @@ fi
 git fetch origin master:master
 git checkout master
 git merge --ff-only ci
+# push git code
+git push origin master
 git tag "${this_image_tag}"
+# push git tag
 git push origin "${this_image_tag}"

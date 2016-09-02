@@ -1,4 +1,8 @@
-# 1.0.0 (1 Sep 2016)
+# 1.0.1 (2 Sep 2016)
+
+* fix release.sh script to push code to master branch
+
+# 1.0.0 (2 Sep 2016)
 
 * install ruby+docker+shpec+shellcheck
 * start from ruby docker base image
