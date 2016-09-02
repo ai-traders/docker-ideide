@@ -16,14 +16,8 @@ pipelines:
                 - small
               tasks:
                 - script: ./build.sh
-      - test:
-          clean_workspace: true
-          jobs:
-            test:
-              resources:
-                - docker
-                - small
-              tasks:
+                # this is the same job so that it happens on 1 go-agent and
+                # thus there is no need to docker push the image before it's tested
                 - script: ./test.sh
       - release:
           clean_workspace: true

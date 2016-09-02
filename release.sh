@@ -12,6 +12,3 @@ git checkout master
 git merge --ff-only ci
 git tag "${this_image_tag}"
 git push origin "${this_image_tag}"
-
-docker tag "${this_image_name}:${this_image_tag}" "docker-registry.ai-traders.com/${this_image_name}:${this_image_tag}"
-docker push "docker-registry.ai-traders.com/${this_image_name}:${this_image_tag}"

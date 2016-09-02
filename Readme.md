@@ -35,6 +35,7 @@ Those files are used inside ideide docker image:
 ## Development
 ### Build
 1. Add any changes and increment version in `image/scripts/variables.sh`
+ (no automated version management).
 2. Build the docker image:
   ```
   ./build.sh
