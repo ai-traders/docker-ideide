@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-source image/scripts/variables.sh
+source ./image/etc_ide.d/variables/60-variables.sh
 cd test
 echo "---------------------------"
 ide rake shellcheck

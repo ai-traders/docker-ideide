@@ -27,7 +27,7 @@ RUN rm /etc/apt/sources.list &&\
   curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose &&\
   chmod +x /usr/local/bin/docker-compose &&\
   git clone --depth 1 -b configs-script http://gitlab.ai-traders.com/ide/ide.git &&\
-  ide/ide_image_scripts/src/install.sh && rm -r ide &&\
+  ./ide/ide_image_scripts/src/install.sh && rm -r ./ide &&\
   echo 'ide ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers &&\
   usermod -aG docker ide &&\
   chown ide:ide -R /usr/local/lib/ruby/gems/2.3.0/ &&\
@@ -37,7 +37,8 @@ RUN rm /etc/apt/sources.list &&\
   rm -rf /tmp/* /var/tmp/* &&\
   rm -rf /var/lib/apt/lists/*
 
-COPY scripts/* /etc/ide.d/
+COPY etc_ide.d/scripts/* /etc/ide.d/scripts/
+COPY etc_ide.d/variables/* /etc/ide.d/variables/
 
 RUN rm -Rf /var/lib/docker/*
 VOLUME /var/lib/docker

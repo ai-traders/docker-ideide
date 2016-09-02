@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-source image/scripts/variables.sh
+source ./image/etc_ide.d/variables/60-variables.sh
 if [[ $(git tag | grep "${this_image_tag}" -c) -ne 0 ]]; then
 	echo "git tag: ${this_image_tag} exists already, please bump version in "\
 	"scripts/variables.sh"

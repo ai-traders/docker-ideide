@@ -11,7 +11,7 @@ It has installed:
 ## Usage
 Example Idefile:
 ```
-IDE_DOCKER_IMAGE="ideide:1.0.0"
+IDE_DOCKER_IMAGE="ai-traders/ideide:1.0.3"
 # --privileged is for docker daemon
 IDE_DOCKER_OPTIONS="--privileged"
 ```
@@ -27,6 +27,7 @@ $ ide gem install gherkin
 
 ### Configuration
 Those files are used inside ideide docker image:
+
 1. `/home/ide/.profile` -- will be generated on docker container start, in
    order to ensure current directory is `/ide/work`.
 2. `~/.gemrc` -- if exists locally, will be copied
@@ -37,9 +38,9 @@ Those files are used inside ideide docker image:
 1. Add any changes and increment version in `image/scripts/variables.sh`
  (no automated version management).
 2. Build the docker image:
-  ```
-  ./build.sh
-  ```
+```
+./build.sh
+```
 
 ### Test
 Run:

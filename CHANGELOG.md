@@ -1,3 +1,12 @@
+# 1.0.3 (2 Sep 2016)
+
+* install ide image configs from IDE source code from public github repository
+
+# 1.0.2 (2 Sep 2016)
+
+* add git.ai-traders.com and gitlab.ai-traders.com setup among /etc/ide.d/scripts
+ until we stop using ruby to release IDE
+
 # 1.0.1 (2 Sep 2016)
 
 * fix release.sh script to push code to master branch
