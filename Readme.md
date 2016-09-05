@@ -11,7 +11,7 @@ It has installed:
 ## Usage
 Example Idefile:
 ```
-IDE_DOCKER_IMAGE="ai-traders/ideide:1.0.3"
+IDE_DOCKER_IMAGE="xmik/ideide:1.0.3"
 # --privileged is for docker daemon
 IDE_DOCKER_OPTIONS="--privileged"
 ```
