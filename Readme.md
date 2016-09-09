@@ -1,3 +1,5 @@
+[![](https://images.microbadger.com/badges/image/xmik/ideide.svg)](https://microbadger.com/images/xmik/ideide "Get your own image badge on microbadger.com")
+
 # ideide
 
 An ide docker image to test [IDE](https://github.com/ai-traders/ide).
