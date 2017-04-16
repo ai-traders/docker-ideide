@@ -1,0 +1,1 @@
+DOCKER_OPTS="--graph=/var/lib/docker -H unix:///var/run/docker.sock -H tcp://0.0.0.0:2375 --mtu=1500"

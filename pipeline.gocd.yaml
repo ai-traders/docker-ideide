@@ -1,0 +1,54 @@
+pipelines:
+  "docker-ideide":
+    group: ide
+    label_template: "${git[:8]}"
+    materials:
+      git:
+        git: "git@git.ai-traders.com:ide/docker-ideide.git"
+        branch: master
+    stages:
+      - style:
+          clean_workspace: true
+          jobs:
+            build:
+              resources:
+                - docker
+                - small
+              tasks:
+                - exec:
+                    command: /bin/bash
+                    arguments:
+                      - -c
+                      - ./tasks verify_version
+      - build:
+          clean_workspace: true
+          jobs:
+            build:
+              resources:
+                - docker
+                - small
+              tasks:
+                - exec:
+                    command: /bin/bash
+                    arguments:
+                      - -c
+                      - ./tasks build
+                # this is the same job so that it happens on 1 go-agent and
+                # thus there is no need to docker push the image before it's tested
+                - exec:
+                    command: /bin/bash
+                    arguments:
+                      - -c
+                      - ./tasks itest
+      - release:
+          clean_workspace: true
+          jobs:
+            code:
+              resources:
+                - docker
+                - small
+              tasks:
+                  command: /bin/bash
+                  arguments:
+                    - -c
+                    - ./tasks release

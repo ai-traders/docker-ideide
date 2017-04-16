@@ -1,48 +1,41 @@
-FROM ruby:2.3.1
-# if you decide to not use ruby as base image, please make sure that rake
-# is an invocable command
-MAINTAINER Ewa Czechowska <ewa@ai-traders.com>
+# I don't know how to install shellcheck on Alpine and there is an official
+# docker image, so let's use it.
+FROM koalaman/shellcheck:v0.4.6
 
-# * entrypoint requires sudo
-# * git is needed by some ruby gems to be installed from github and
-# to install ide image configs
-# * make is needed to install shpec and to install gems with native extensions
-# * keep only needed apt sources to make apt-get update faster
-# * the sed line fixes https://github.com/docker/docker/pull/25869
-# remove it when docker 1.12.2 is available
-# * chown ide:ide -R /usr/local/lib/ruby/gems/2.3.0/ is needed to install
-# gem gherkin
-RUN rm /etc/apt/sources.list &&\
-  echo "deb http://httpredir.debian.org/debian jessie main" > \
-    /etc/apt/sources.list &&\
-  apt-get update && apt-get install -y --force-yes --no-install-recommends apt-transport-https &&\
-  echo "deb https://apt.dockerproject.org/repo/ debian-jessie main" > \
-    /etc/apt/sources.list.d/docker.list &&\
-  echo "deb http://archive.ubuntu.com/ubuntu/ trusty-backports restricted main universe" > \
-    /etc/apt/sources.list.d/shellcheck.list &&\
-  apt-get update && apt-get install -y --force-yes --no-install-recommends git sudo shellcheck curl docker-engine make nano &&\
-  sh -c "`curl -L https://raw.github.com/rylnd/shpec/master/install.sh`" &&\
-  sed -i 's/status_of_proc -p "$DOCKER_SSD_PIDFILE" "$DOCKER" "$DOCKER_DESC"/status_of_proc -p "$DOCKER_SSD_PIDFILE" "$DOCKERD" "$DOCKER_DESC"/g' /etc/init.d/docker &&\
-  echo "DOCKER_OPTS=\"--graph=/var/lib/docker -H unix:///var/run/docker.sock -H tcp://0.0.0.0:2375\"" > /etc/default/docker &&\
-  curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose &&\
-  chmod +x /usr/local/bin/docker-compose &&\
-  git clone --depth 1 -b 0.5.0 https://github.com/ai-traders/ide.git /tmp/ide_git && \
+# For ide:
+# * entrypoint requires sudo and shadow
+# * git is needed to install ide image configs
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+  apk add --no-cache bash shadow sudo git && \
+  git clone --depth 1 -b 0.8.0 https://github.com/ai-traders/ide.git /tmp/ide_git && \
   /tmp/ide_git/ide_image_scripts/src/install.sh && \
   rm -r /tmp/ide_git && \
-  echo 'ide ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers &&\
-  usermod -aG docker ide &&\
-  chown ide:ide -R /usr/local/lib/ruby/gems/2.3.0/ &&\
-  apt-get -y autoremove &&\
-  apt-get -y autoclean &&\
-  apt-get -y clean &&\
-  rm -rf /tmp/* /var/tmp/* &&\
-  rm -rf /var/lib/apt/lists/*
+  echo 'ide ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 
 COPY etc_ide.d/scripts/* /etc/ide.d/scripts/
 COPY etc_ide.d/variables/* /etc/ide.d/variables/
-
-RUN rm -Rf /var/lib/docker/*
-VOLUME /var/lib/docker
+COPY inputrc /etc/inputrc
 
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 CMD ["/bin/bash"]
+
+# Install docker daemon
+COPY etc_default_docker /etc/default/docker
+RUN apk add --no-cache docker=1.12.6-r0 &&\
+  usermod -a -G docker ide &&\
+  rm -Rf /var/lib/docker/*
+VOLUME /var/lib/docker
+
+# Install docker-compose
+RUN apk add --no-cache py-pip &&\
+  pip install docker-compose
+
+# Install Shpec
+RUN apk add --no-cache curl make nano &&\
+  sh -c "`curl -L https://raw.github.com/rylnd/shpec/master/install.sh`"
+
+# Install bats
+RUN git clone --depth 1 https://github.com/sstephenson/bats.git /opt/bats &&\
+  git clone --depth 1 https://github.com/ztombol/bats-support.git /opt/bats-support &&\
+  git clone --depth 1 https://github.com/ztombol/bats-assert.git /opt/bats-assert &&\
+  /opt/bats/install.sh /usr/local

@@ -1,2 +1,0 @@
-IDE_DOCKER_IMAGE="${this_image_name}:${this_image_tag}"
-IDE_DOCKER_OPTIONS="--privileged"

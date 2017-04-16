@@ -1,3 +1,10 @@
+* do not install ruby
+* install bats
+* docker 1.12.6-r0
+* docker-compose 1.12.0
+* use Alpine as base image
+* better tests
+
 # 1.0.3 (2 Sep 2016)
 
 * install ide image configs from IDE source code from public github repository

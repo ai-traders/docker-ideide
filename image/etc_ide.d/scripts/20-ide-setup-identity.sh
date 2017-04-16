@@ -15,19 +15,28 @@ if [ ! -f "${ide_identity}/.ssh/id_rsa" ]; then
   exit 1;
 fi
 cp -r "${ide_identity}/.ssh" "${ide_home}"
+for id_rsa_file in "${ide_home}/.ssh/"*"id_rsa"; do
+  chown ide:ide "${id_rsa_file}"
+  chmod 0600 "${id_rsa_file}"
+done
 
 # we need to ensure that ${ide_home}/.ssh/config contains at least:
 # StrictHostKeyChecking no
 echo "StrictHostKeyChecking no
 UserKnownHostsFile /dev/null
-
 ForwardAgent yes
+
 Host git.ai-traders.com
 User git
 Port 2222
 IdentityFile ${ide_home}/.ssh/id_rsa
 
-Host gitlab.ai-traders.com
+Host gogs.ai-traders.com
+User git
+Port 2222
+IdentityFile ${ide_home}/.ssh/id_rsa
+
+Host git.ai-traders.com
 User git
 Port 2222
 IdentityFile ${ide_home}/.ssh/id_rsa
@@ -44,8 +53,3 @@ fi
 # this docker image.
 touch "${ide_home}/.profile"
 echo "cd ${ide_work}" > "${ide_home}/.profile"
-
-# not obligatory configuration file
-if [ -f "${ide_identity}/.gemrc" ]; then
-  cp "${ide_identity}/.gemrc" "${ide_home}"
-fi

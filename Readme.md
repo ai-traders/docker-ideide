@@ -2,18 +2,18 @@
 
 # ideide
 
-An ide docker image to test [IDE](https://github.com/ai-traders/ide).
+An ide docker image to test [ide](https://github.com/ai-traders/ide).
 
 It has installed:
- * ruby
  * shpec
  * shellcheck
  * docker daemon
+ * bats
 
 ## Usage
 Example Idefile:
 ```
-IDE_DOCKER_IMAGE="xmik/ideide:1.0.3"
+IDE_DOCKER_IMAGE="xmik/ideide:2.0.0"
 # --privileged is for docker daemon
 IDE_DOCKER_OPTIONS="--privileged"
 ```
@@ -21,10 +21,11 @@ IDE_DOCKER_OPTIONS="--privileged"
 By default current directory in docker container is `/ide/work` and docker daemon
  is running. Example commands:
 ```bash
-$ ide rake style
+$ ide shellcheck ./my-script.sh
 $ ide shpec
 $ ide docker ps -a
-$ ide gem install gherkin
+$ ide docker-compose --version
+$ ide bats --version
 ```
 
 ### Configuration
@@ -35,34 +36,21 @@ Those files are used inside ideide docker image:
 3. `/home/ide/.profile` -- will be generated on docker container start, in
    order to ensure current directory is `/ide/work`.
 4. `~/.gitconfig` -- if exists locally, will be copied
-5. `~/.gemrc` -- if exists locally, will be copied
 
 ## Development
 ### Dependencies
-Bash and Docker daemon.
+* Bash
+* Docker daemon
+* Bats
+* Ide
 
-### Build
-1. Add any changes and increment version in `image/scripts/variables.sh`
- (no automated version management).
-2. Build the docker image:
-```
-./build.sh
-```
-
-### Test
-Run:
-```
-./test.sh
-```
-
-### Release
-Run:
-```
-./release.sh
-```
-
-### TODO
-* Why not use Alpine Linux as base docker image? Because I wanted to avoid
- compiling ShellCheck. But I could try compiling it using
- https://github.com/NLKNguyen/alpine-shellcheck .
-* Add better acceptance tests which run `ide` commands (use BATS?).
+### Lifecycle
+1. You make changes in a feature branch and git push it.
+1. You build docker image and test it:
+   * `./tasks build`
+   * `./tasks itest`
+1. You decide that it is time for GoCD to test and release your code, so you locally:
+    * run `./tasks bump` to bump the patch version fragment by 1 or
+    `./tasks bump 1.2.3` to bump to a particular version. Version is bumped in Changelog and OVersion backend.
+    * merge that branch into master and push to git server
+1. CI pipeline tests, releases and publishes docker image.
