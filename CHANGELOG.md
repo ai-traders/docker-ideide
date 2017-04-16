@@ -1,3 +1,5 @@
+### 2.0.0 (2017-Apr-16)
+
 * do not install ruby
 * install bats
 * docker 1.12.6-r0

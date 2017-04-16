@@ -48,7 +48,8 @@ pipelines:
                 - docker
                 - small
               tasks:
-                  command: /bin/bash
-                  arguments:
-                    - -c
-                    - ./tasks release
+                - exec:
+                    command: /bin/bash
+                    arguments:
+                      - -c
+                      - ./tasks release

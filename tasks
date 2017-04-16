@@ -11,14 +11,16 @@ source ./releaser
 # test this without pushing to our private docker-registry.
 releaser_init
 
+version_file="./image/etc_ide.d/variables/60-variables.sh"
+
 function verify_version_not_released {
-  source ./image/etc_ide.d/variables/60-variables.sh
+  source "${version_file}"
   if [[ $(git tag | grep "${this_image_tag}" -c) -ne 0 ]]; then
     echo "git tag: ${this_image_tag} exists already, please bump version in "\
-    "./image/etc_ide.d/variables/60-variables.sh"
+    "${version_file}"
     exit 1
   fi
-  changelog_version=$(get_last_version_from_changelog)
+  changelog_version=$(get_last_version_from_changelog "${changelog_file}")
   if [[ $(git tag | grep "${changelog_version}" -c) -ne 0 ]]; then
     echo "git tag: ${changelog_version} exists already, please bump version in "\
     "changelog file"
@@ -26,12 +28,13 @@ function verify_version_not_released {
   fi
 }
 
+
 command="$1"
 case "${command}" in
   bump)
     new_version="$2"
     if [[ -z "${new_version}" ]];then
-      source ./image/etc_ide.d/variables/60-variables.sh
+      source "${version_file}"
       old_version="${this_image_tag}"
       new_version="$(bump_patch_version ${old_version})"
     fi
@@ -46,13 +49,13 @@ case "${command}" in
   build)
       # This is a public docker image, we cannot have complicated
       # build script or use --build-arg.
-      source ./image/etc_ide.d/variables/60-variables.sh
+      source "${version_file}"
       cd image
       docker build -t ${this_image_name}:${this_image_tag} --rm .
       exit $?
       ;;
   itest)
-      source ./image/etc_ide.d/variables/60-variables.sh
+      source "${version_file}"
       echo "IDE_DOCKER_IMAGE=${this_image_name}:${this_image_tag}" > Idefile.to_be_tested
       echo "IDE_IDENTITY=$(pwd)/test/integration/ide_identities/full" >> Idefile.to_be_tested
       echo "IDE_WORK=$(pwd)/test/integration/ide_work" >> Idefile.to_be_tested
