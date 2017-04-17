@@ -1,3 +1,5 @@
+### 2.0.1 (2017-Apr-17)
+
 * install coreutils so that `sort -V` works
 * add colorful bash prompt with ideide in name
 
