@@ -7,22 +7,22 @@ An ide docker image to test [ide](https://github.com/ai-traders/ide).
 
 It has installed:
  * shpec
+ * bats
  * docker daemon
  * docker-compose
- * bats
 
 ## Usage
 ### Ubuntu based
 Example Idefile:
 ```
-IDE_DOCKER_IMAGE="xmik/ideide:3.0.0"
+IDE_DOCKER_IMAGE="xmik/ideide:3.0.1"
 # --privileged is for docker daemon
 IDE_DOCKER_OPTIONS="--privileged"
 ```
 ### Alpine based
 Example Idefile:
 ```
-IDE_DOCKER_IMAGE="xmik/ideide-alpine:3.0.0"
+IDE_DOCKER_IMAGE="xmik/ideide-alpine:3.0.1"
 # --privileged is for docker daemon
 IDE_DOCKER_OPTIONS="--privileged"
 ```
