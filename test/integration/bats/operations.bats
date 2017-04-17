@@ -30,3 +30,8 @@ load '/opt/bats-assert/load.bash'
   run ide --idefile Idefile.to_be_tested "sort --help | grep -- '-V'"
   assert_equal "$status" 0
 }
+@test "wget is installed and works with https" {
+  # since we git clone bats anyways, we can test wget on one of bats files
+  run ide --idefile Idefile.to_be_tested "rm -f bats-readme && wget -O bats-readme https://raw.githubusercontent.com/sstephenson/bats/master/README.md && rm bats-readme"
+  assert_equal "$status" 0
+}

@@ -1,3 +1,8 @@
+### 3.0.1 (2017-Apr-17)
+
+* test that wget is installed (it was not on Ubuntu)
+* test that wget works with https (it did not)
+
 ### 3.0.0 (2017-Apr-17)
 
 * There will be now 2 docker images: ideide and ideide-alpine. Ide should
