@@ -41,3 +41,7 @@ load '/opt/bats-assert/load.bash'
   assert_output --partial "this_image_name=ideide"
   assert_equal "$status" 0
 }
+@test "sort -V works" {
+  run ide --idefile Idefile.to_be_tested "sort --help | grep -- '-V'"
+  assert_equal "$status" 0
+}

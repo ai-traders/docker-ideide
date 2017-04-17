@@ -19,6 +19,10 @@ COPY inputrc /etc/inputrc
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 CMD ["/bin/bash"]
 
+# Install useful packages
+# * coreutils is needed to make `sort -V` work
+RUN apk add --no-cache curl nano coreutils
+
 # Install docker daemon
 COPY etc_default_docker /etc/default/docker
 RUN apk add --no-cache docker=1.12.6-r0 &&\
@@ -31,7 +35,7 @@ RUN apk add --no-cache py-pip &&\
   pip install docker-compose
 
 # Install Shpec
-RUN apk add --no-cache curl make nano &&\
+RUN apk add --no-cache make &&\
   sh -c "`curl -L https://raw.github.com/rylnd/shpec/master/install.sh`"
 
 # Install bats

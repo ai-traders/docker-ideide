@@ -1,3 +1,6 @@
+* install coreutils so that `sort -V` works
+* add colorful bash prompt with ideide in name
+
 ### 2.0.0 (2017-Apr-16)
 
 * do not install ruby
