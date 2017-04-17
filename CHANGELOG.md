@@ -1,5 +1,7 @@
 * There will be now 2 docker images: ideide and ideide-alpine. Ide should
- work on ubuntu/debian and alpine platforms.
+ work on Ubuntu/Debian and Alpine platforms.
+* do not install ShellCheck. It is hard to install the same version on Alpine
+ and on Ubuntu. Use koalaman/shellcheck:v0.4.6 for ShellCheck.
 
 ### 2.0.1 (2017-Apr-17)
 

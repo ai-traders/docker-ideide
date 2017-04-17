@@ -1,9 +1,9 @@
 FROM ubuntu:16.04
 
-# # Keep only needed apt sources to make apt-get update faster (no universe)
-# RUN echo "deb http://archive.ubuntu.com/ubuntu/ xenial main restricted" > /etc/apt/sources.list &&\
-#   echo "deb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted" >> /etc/apt/sources.list &&\
-#   echo "deb http://archive.ubuntu.com/ubuntu/ xenial-security main restricted" >> /etc/apt/sources.list
+# Keep only needed apt sources to make apt-get update faster (no universe)
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ xenial main restricted" > /etc/apt/sources.list &&\
+  echo "deb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted" >> /etc/apt/sources.list &&\
+  echo "deb http://archive.ubuntu.com/ubuntu/ xenial-security main restricted" >> /etc/apt/sources.list
 
 # For ide:
 # * entrypoint requires sudo
@@ -26,7 +26,7 @@ CMD ["/bin/bash"]
 RUN apt-get update &&\
   apt-get install -y --yes --no-install-recommends apt-transport-https &&\
   echo "deb https://apt.dockerproject.org/repo/ ubuntu-xenial main" > /etc/apt/sources.list.d/docker.list &&\
-  apt-get update && apt-get install -y --yes --no-install-recommends --allow-unauthenticated shellcheck curl docker-engine=1.12.6-0~ubuntu-xenial make nano &&\
+  apt-get update && apt-get install -y --yes --no-install-recommends --allow-unauthenticated curl docker-engine=1.12.6-0~ubuntu-xenial make nano &&\
   sh -c "`curl -L https://raw.github.com/rylnd/shpec/master/install.sh`" &&\
   curl -L https://github.com/docker/compose/releases/download/1.12.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose &&\
   chmod +x /usr/local/bin/docker-compose &&\

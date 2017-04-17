@@ -1,6 +1,4 @@
-# I don't know how to install shellcheck on Alpine and there is an official
-# docker image, so let's use it.
-FROM koalaman/shellcheck:v0.4.6
+FROM alpine:3.5
 
 # For ide:
 # * entrypoint requires sudo and shadow

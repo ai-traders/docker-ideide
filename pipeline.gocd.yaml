@@ -28,18 +28,19 @@ pipelines:
                 - docker
                 - small
               tasks:
+                # All those tasks happen on 1 go-agent, thus there is no need
+                # to docker push the image before it's tested.
                 - exec:
                     command: /bin/bash
                     arguments:
                       - -c
                       - ./tasks build
-                # this is the same job so that it happens on 1 go-agent and
-                # thus there is no need to docker push the image before it's tested
                 - exec:
                     command: /bin/bash
                     arguments:
                       - -c
                       - ./tasks itest
+                # No publish. There is automated docker build.
       - build_alpine:
           clean_workspace: true
           jobs:
@@ -60,11 +61,6 @@ pipelines:
                     arguments:
                       - -c
                       - ./tasks itest_alpine
-                - exec:
-                    command: /bin/bash
-                    arguments:
-                      - -c
-                      - ./tasks publish_alpine
       - release:
           clean_workspace: true
           jobs:
