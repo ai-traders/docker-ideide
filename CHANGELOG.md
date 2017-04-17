@@ -1,3 +1,5 @@
+### 3.0.0 (2017-Apr-17)
+
 * There will be now 2 docker images: ideide and ideide-alpine. Ide should
  work on Ubuntu/Debian and Alpine platforms.
 * do not install ShellCheck. It is hard to install the same version on Alpine

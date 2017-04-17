@@ -6,4 +6,4 @@
 ###########################################################################
 
 export this_image_name="ideide"
-export this_image_tag="2.0.1"
+export this_image_tag="3.0.0"
