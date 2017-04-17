@@ -6,6 +6,8 @@ pipelines:
       git:
         git: "git@git.ai-traders.com:ide/docker-ideide.git"
         branch: master
+        blacklist:
+          - "**/*.md"
     stages:
       - style:
           clean_workspace: true
