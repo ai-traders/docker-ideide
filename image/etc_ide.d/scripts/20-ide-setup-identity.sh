@@ -35,11 +35,6 @@ Host gogs.ai-traders.com
 User git
 Port 2222
 IdentityFile ${ide_home}/.ssh/id_rsa
-
-Host git.ai-traders.com
-User git
-Port 2222
-IdentityFile ${ide_home}/.ssh/id_rsa
 " > "${ide_home}/.ssh/config"
 
 # not obligatory configuration file

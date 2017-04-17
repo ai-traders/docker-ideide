@@ -20,7 +20,7 @@ pipelines:
                     arguments:
                       - -c
                       - ./tasks verify_version
-      - build:
+      - build_ubuntu:
           clean_workspace: true
           jobs:
             build:
@@ -40,6 +40,31 @@ pipelines:
                     arguments:
                       - -c
                       - ./tasks itest
+      - build_alpine:
+          clean_workspace: true
+          jobs:
+            build:
+              resources:
+                - docker
+                - small
+              tasks:
+                # All those tasks happen on 1 go-agent, thus there is no need
+                # to docker push the image before it's tested.
+                - exec:
+                    command: /bin/bash
+                    arguments:
+                      - -c
+                      - ./tasks build_alpine
+                - exec:
+                    command: /bin/bash
+                    arguments:
+                      - -c
+                      - ./tasks itest_alpine
+                - exec:
+                    command: /bin/bash
+                    arguments:
+                      - -c
+                      - ./tasks publish_alpine
       - release:
           clean_workspace: true
           jobs:

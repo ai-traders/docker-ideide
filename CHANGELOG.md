@@ -1,3 +1,6 @@
+* There will be now 2 docker images: ideide and ideide-alpine. Ide should
+ work on ubuntu/debian and alpine platforms.
+
 ### 2.0.1 (2017-Apr-17)
 
 * install coreutils so that `sort -V` works

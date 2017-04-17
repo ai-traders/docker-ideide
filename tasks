@@ -5,10 +5,6 @@ if [[ ! -f ./releaser ]];then
   wget http://http.archive.ai-traders.com/releaser/0.3.2/releaser
 fi
 source ./releaser
-# Docker-ops are not used here, because it is a public ide docker image and
-# we let it build on docker hub. If there was 1 such image in docker hub and one
-# in our private docker-registry, they could differ. Thus
-# test this without pushing to our private docker-registry.
 releaser_init
 
 version_file="./image/etc_ide.d/variables/60-variables.sh"
@@ -47,11 +43,19 @@ case "${command}" in
       exit $?
       ;;
   build)
-      # This is a public docker image, we cannot have complicated
+      # 1. This is an automated build on docker hub, so we cannot have complicated
       # build script or use --build-arg.
+      # 2. Also, since it is a public github repo, the non-release commands must
+      # be invocable for anyone.
       source "${version_file}"
       cd image
       docker build -t ${this_image_name}:${this_image_tag} --rm .
+      exit $?
+      ;;
+  build_alpine)
+      source "${version_file}"
+      cd image
+      docker build -f DockerfileAlpine -t xmik/${this_image_name}-alpine:${this_image_tag} --rm .
       exit $?
       ;;
   itest)
@@ -63,11 +67,27 @@ case "${command}" in
       time bats "$(pwd)/test/integration/bats"
       exit $?
       ;;
+  itest_alpine)
+      source "${version_file}"
+      echo "IDE_DOCKER_IMAGE=${this_image_name}-alpine:${this_image_tag}" > Idefile.to_be_tested
+      echo "IDE_IDENTITY=$(pwd)/test/integration/ide_identities/full" >> Idefile.to_be_tested
+      echo "IDE_WORK=$(pwd)/test/integration/ide_work" >> Idefile.to_be_tested
+      echo "IDE_DOCKER_OPTIONS=\"--privileged\"" >> Idefile.to_be_tested
+      time bats "$(pwd)/test/integration/bats"
+      exit $?
+      ;;
   release)
       verify_version_not_released
       git tag "${this_image_tag}"
       # push git tag
       git push origin "${this_image_tag}"
+      exit $?
+      ;;
+  publish_alpine)
+      # Do not push the ubuntu image, there is an automated build on docker hub.
+      # If we can set Dockerfile on docker hub, add automated build for alpine
+      # image too and remove this task.
+      docker push xmik/${this_image_name}-alpine:${this_image_tag}
       exit $?
       ;;
   *)
