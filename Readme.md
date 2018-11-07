@@ -12,23 +12,23 @@ It has installed:
  * docker-compose
 
 ## Usage
-### Ubuntu based
+### Debian based
 Example Idefile:
 ```
-IDE_DOCKER_IMAGE="xmik/ideide:3.0.1"
+IDE_DOCKER_IMAGE="xmik/ideide:3.0.2"
 # --privileged is for docker daemon
 IDE_DOCKER_OPTIONS="--privileged"
 ```
 ### Alpine based
 Example Idefile:
 ```
-IDE_DOCKER_IMAGE="xmik/ideide-alpine:3.0.1"
+IDE_DOCKER_IMAGE="xmik/ideide-alpine:3.0.2"
 # --privileged is for docker daemon
 IDE_DOCKER_OPTIONS="--privileged"
 ```
 
 ### Commands
-By default current directory in docker container is `/ide/work` and docker daemon
+Current directory in docker container is `/ide/work` and docker daemon
  is running. Example commands:
 ```bash
 $ ide shpec
@@ -41,9 +41,7 @@ $ ide bats --version
 Those files are used inside ideide docker image:
 
 1. `~/.ssh/config` -- will be generated on docker container start
-2. `~/.ssh/id_rsa` -- it must exist locally, because it is a secret
-3. `/home/ide/.profile` -- will be generated on docker container start, in
-   order to ensure current directory is `/ide/work`.
+2. `~/.ssh/id_rsa` -- if exists locally, will be copied
 4. `~/.gitconfig` -- if exists locally, will be copied
 
 ## Development and contributions

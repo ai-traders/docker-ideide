@@ -1,3 +1,5 @@
+### 3.0.2 (2018-Nov-07)
+
 * tasks: do not fail if cannot download releaser, thus e.g. allow `./tasks build`
  to be run without releaser
 * pin Shpec version, Shpec 0.3.0
