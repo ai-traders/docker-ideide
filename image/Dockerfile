@@ -4,8 +4,9 @@ FROM debian:9.5-slim
 # * entrypoint requires sudo
 # * git is needed to install ide image configs
 # * ca-certificates is needed to use https://github.com
-RUN apt-get update && apt-get install -y --yes --no-install-recommends bash sudo git ca-certificates &&\
-  git clone --depth 1 -b 0.8.0 https://github.com/ai-traders/ide.git /tmp/ide_git &&\
+RUN export DEBIAN_FRONTEND=noninteractive &&\
+  apt-get update && apt-get install -y --yes --no-install-recommends bash sudo git ca-certificates &&\
+  git clone --depth 1 -b 0.10.4 https://github.com/ai-traders/ide.git /tmp/ide_git &&\
   /tmp/ide_git/ide_image_scripts/src/install.sh &&\
   rm -r /tmp/ide_git &&\
   echo 'ide ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
