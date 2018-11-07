@@ -41,5 +41,9 @@ RUN git clone --depth 1 https://github.com/sstephenson/bats.git /opt/bats &&\
 COPY etc_ide.d/scripts/* /etc/ide.d/scripts/
 COPY etc_ide.d/variables/* /etc/ide.d/variables/
 
+COPY bashrc /home/ide/.bashrc
+COPY profile /home/ide/.profile
+RUN chown ide:ide /home/ide/.bashrc /home/ide/.profile
+
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 CMD ["/bin/bash"]

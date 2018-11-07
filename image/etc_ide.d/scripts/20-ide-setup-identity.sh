@@ -30,12 +30,3 @@ ForwardAgent yes
 if [ -f "${ide_identity}/.gitconfig" ]; then
   cp "${ide_identity}/.gitconfig" "${ide_home}"
 fi
-
-# This file:
-# * ensures that after bash login, current directory is /ide/
-# * sets bash prompt
-# * do not copy it from $ide_identity, because it may reference sth not installed in
-# this docker image.
-touch "${ide_home}/.profile"
-echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\](ideide):\[\033[01;34m\]\w\[\033[00m\]\\\$ '"> "${ide_home}/.profile"
-echo "cd ${ide_work}" >> "${ide_home}/.profile"
