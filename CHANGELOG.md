@@ -1,6 +1,7 @@
 * tasks: do not fail if cannot download releaser, thus e.g. allow `./tasks build`
  to be run without releaser
 * pin Shpec version
+* new base images: `alpine:3.8`, `debian:9.5-slim`
 
 ### 3.0.1 (2017-Apr-17)
 

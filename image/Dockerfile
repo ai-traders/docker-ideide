@@ -1,9 +1,4 @@
-FROM ubuntu:16.04
-
-# Keep only needed apt sources to make apt-get update faster (no universe)
-RUN echo "deb http://archive.ubuntu.com/ubuntu/ xenial main restricted" > /etc/apt/sources.list &&\
-  echo "deb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted" >> /etc/apt/sources.list &&\
-  echo "deb http://archive.ubuntu.com/ubuntu/ xenial-security main restricted" >> /etc/apt/sources.list
+FROM debian:9.5-slim
 
 # For ide:
 # * entrypoint requires sudo
