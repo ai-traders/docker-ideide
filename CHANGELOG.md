@@ -3,6 +3,8 @@
 * pin Shpec version
 * new base images: `alpine:3.8`, `debian:9.5-slim`
 * ide image scripts from IDE 0.10.4
+* docker 18.06.1
+* docker-compose 1.23.1
 
 ### 3.0.1 (2017-Apr-17)
 

@@ -20,11 +20,12 @@ CMD ["/bin/bash"]
 # Install all at once to avoid many apt-get update
 # * make is needed to install Shpec
 RUN apt-get update &&\
-  apt-get install -y --yes --no-install-recommends apt-transport-https &&\
-  echo "deb https://apt.dockerproject.org/repo/ ubuntu-xenial main" > /etc/apt/sources.list.d/docker.list &&\
-  apt-get update && apt-get install -y --yes --no-install-recommends --allow-unauthenticated wget curl docker-engine=1.12.6-0~ubuntu-xenial make nano &&\
-  curl -L https://github.com/docker/compose/releases/download/1.12.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose &&\
+  apt-get install -y --yes --no-install-recommends apt-transport-https curl gnupg2 wget &&\
+  echo "deb https://download.docker.com/linux/debian stretch stable" > /etc/apt/sources.list.d/docker.list &&\
+  curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - &&\
+  apt-get update && apt-get install -y --yes --no-install-recommends docker-ce=18.06.1~ce~3-0~debian make nano &&\
   sh -c "`curl -L https://raw.github.com/rylnd/shpec/0.2.2/install.sh`" &&\
+  curl -L https://github.com/docker/compose/releases/download/1.23.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose &&\
   chmod +x /usr/local/bin/docker-compose &&\
   usermod -aG docker ide &&\
   rm -Rf /var/lib/docker/* &&\
