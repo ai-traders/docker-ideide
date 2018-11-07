@@ -1,3 +1,6 @@
+* tasks: do not fail if cannot download releaser, thus e.g. allow `./tasks build`
+ to be run without releaser
+
 ### 3.0.1 (2017-Apr-17)
 
 * test that wget is installed (it was not on Ubuntu)

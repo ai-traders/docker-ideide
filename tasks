@@ -2,10 +2,12 @@
 
 set -e
 if [[ ! -f ./releaser ]];then
-  wget http://http.archive.ai-traders.com/releaser/0.3.2/releaser
+  timeout 2 wget -O releaser http://http.archive.ai-traders.com/releaser/1.0.6/releaser || { echo "Cannot download releaser, ignoring"; rm -f ./releaser; }
 fi
-source ./releaser
-releaser_init
+if [[ -f ./releaser ]];then
+  source ./releaser
+  releaser_init
+fi
 
 version_file="./image/etc_ide.d/variables/60-variables.sh"
 
