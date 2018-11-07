@@ -6,6 +6,7 @@
 * docker 18.06.1
 * docker-compose 1.23.1
 * fix tests so that we can parallely test 2 docker images
+* remove the need for `${HOME}/.ssh` directory, do not generate ssh config with AI-Traders endpoints
 
 ### 3.0.1 (2017-Apr-17)
 
