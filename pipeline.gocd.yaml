@@ -13,9 +13,7 @@ pipelines:
           clean_workspace: true
           jobs:
             build:
-              resources:
-                - docker
-                - small
+              elastic_profile_id: w.c1.m1024.e5
               tasks:
                 - exec:
                     command: /bin/bash
@@ -26,9 +24,7 @@ pipelines:
           clean_workspace: true
           jobs:
             build:
-              resources:
-                - docker
-                - small
+              elastic_profile_id: w.c1.m1024.e5
               tasks:
                 # All those tasks happen on 1 go-agent, thus there is no need
                 # to docker push the image before it's tested.
@@ -47,9 +43,7 @@ pipelines:
           clean_workspace: true
           jobs:
             build:
-              resources:
-                - docker
-                - small
+              elastic_profile_id: w.c1.m1024.e5
               tasks:
                 # All those tasks happen on 1 go-agent, thus there is no need
                 # to docker push the image before it's tested.
@@ -67,9 +61,7 @@ pipelines:
           clean_workspace: true
           jobs:
             code:
-              resources:
-                - docker
-                - small
+              elastic_profile_id: w.c1.m1024.e5
               tasks:
                 - exec:
                     command: /bin/bash
