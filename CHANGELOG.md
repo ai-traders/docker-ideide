@@ -5,6 +5,7 @@
 * ide image scripts from IDE 0.10.4
 * docker 18.06.1
 * docker-compose 1.23.1
+* fix tests so that we can parallely test 2 docker images
 
 ### 3.0.1 (2017-Apr-17)
 
