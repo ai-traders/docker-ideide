@@ -27,8 +27,8 @@ RUN apt-get update &&\
   apt-get install -y --yes --no-install-recommends apt-transport-https &&\
   echo "deb https://apt.dockerproject.org/repo/ ubuntu-xenial main" > /etc/apt/sources.list.d/docker.list &&\
   apt-get update && apt-get install -y --yes --no-install-recommends --allow-unauthenticated wget curl docker-engine=1.12.6-0~ubuntu-xenial make nano &&\
-  sh -c "`curl -L https://raw.github.com/rylnd/shpec/master/install.sh`" &&\
   curl -L https://github.com/docker/compose/releases/download/1.12.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose &&\
+  sh -c "`curl -L https://raw.github.com/rylnd/shpec/0.2.2/install.sh`" &&\
   chmod +x /usr/local/bin/docker-compose &&\
   usermod -aG docker ide &&\
   rm -Rf /var/lib/docker/* &&\
