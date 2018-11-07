@@ -3,7 +3,7 @@ load '/opt/bats-assert/load.bash'
 
 @test "shpec is installed" {
   run ide --idefile Idefile.to_be_tested "shpec --version"
-  assert_output --partial "0.2.2"
+  assert_output --partial "0.3.0"
   assert_equal "$status" 0
 }
 @test "docker daemon is running" {

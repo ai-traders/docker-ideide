@@ -1,6 +1,6 @@
 * tasks: do not fail if cannot download releaser, thus e.g. allow `./tasks build`
  to be run without releaser
-* pin Shpec version
+* pin Shpec version, Shpec 0.3.0
 * new base images: `alpine:3.8`, `debian:9.5-slim`
 * ide image scripts from IDE 0.10.4
 * docker 18.06.1

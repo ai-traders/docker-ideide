@@ -10,13 +10,6 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repos
   rm -r /tmp/ide_git && \
   echo 'ide ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 
-COPY etc_ide.d/scripts/* /etc/ide.d/scripts/
-COPY etc_ide.d/variables/* /etc/ide.d/variables/
-COPY inputrc /etc/inputrc
-
-ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-CMD ["/bin/bash"]
-
 # Install useful packages
 # * coreutils is needed to make `sort -V` work
 # * openssl is to make wget work with https. Otherwise there is error:
@@ -36,10 +29,17 @@ RUN apk add --no-cache py-pip &&\
 
 # Install Shpec
 RUN apk add --no-cache make &&\
-  sh -c "`curl -L https://raw.github.com/rylnd/shpec/0.2.2/install.sh`"
+  sh -c "`curl -L https://raw.github.com/rylnd/shpec/0.3.0/install.sh`"
 
 # Install bats
 RUN git clone --depth 1 https://github.com/sstephenson/bats.git /opt/bats &&\
   git clone --depth 1 https://github.com/ztombol/bats-support.git /opt/bats-support &&\
   git clone --depth 1 https://github.com/ztombol/bats-assert.git /opt/bats-assert &&\
   /opt/bats/install.sh /usr/local
+
+COPY etc_ide.d/scripts/* /etc/ide.d/scripts/
+COPY etc_ide.d/variables/* /etc/ide.d/variables/
+COPY inputrc /etc/inputrc
+
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+CMD ["/bin/bash"]
